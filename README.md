@@ -15,9 +15,9 @@ The Task Management System is a web application that allows users to create, org
 
 ## Technologies
 
-* Frontend: TBD
-* Backend: TBD
-* Database: TBD
+* **Frontend:** HTML, JavaScript, Tailwind CSS
+* **Backend:** Node.js, Express.js
+* **Database:** Currently using mock data (TBD for production)
 
 ## Team Members
 
@@ -30,6 +30,22 @@ The Task Management System is a web application that allows users to create, org
 
 ## Installation
 
+To get this project running on your local machine, ensure you have [Node.js](https://nodejs.org/) installed.
+
+1. **Clone the repository** to your local machine.
+2. **Navigate to the project directory** in your terminal:
+    ```bash
+    cd task-manager-app
+    ```
+3. **Install the required dependencies:**
+    ```bash
+    npm install
+    ```
+4. **Start the backend server:**
+    ```bash
+    node server.js
+    ```
+5. **Access the application** by navigating to `http://localhost:3000`.
 
 ## Usage
 
