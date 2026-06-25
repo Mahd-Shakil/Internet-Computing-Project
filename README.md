@@ -37,15 +37,19 @@ To get this project running on your local machine, ensure you have [Node.js](htt
     ```bash
     cd task-manager-app
     ```
-3. **Install the required dependencies:**
+3. **Initialize Node:**
+    ```bash
+    npm init -y
+    ```
+4. **Install the required dependencies:**
     ```bash
     npm install
     ```
-4. **Start the backend server:**
+5. **Start the backend server:**
     ```bash
     node server.js
     ```
-5. **Access the application** by navigating to `http://localhost:3000`.
+6. **Access the application** by navigating to `http://localhost:3000`.
 
 ## Usage
 
