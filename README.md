@@ -51,8 +51,6 @@ To get this project running on your local machine, ensure you have [Node.js](htt
     ```
 6. **Access the application** by navigating to `http://localhost:3000`.
 
-## Usage
-
-
 ## Project Status
 
+Each individual front end screen is now fully functional. Next step is to improve the user flow from one screen to another and implementing and connecting a database.
