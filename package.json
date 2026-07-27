@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/Mahd-Shakil/Internet-Computing-Project#readme",
   "dependencies": {
+    "@supabase/supabase-js": "^2.110.9",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1"
   }
 }
