@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Task Manager</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans h-screen flex flex-col justify-center items-center">
 
@@ -14,18 +15,20 @@
     </div>
 
     <div class="bg-white p-8 rounded-lg shadow-sm border border-gray-200 max-w-md w-full">
-        <form action="index.html" method="GET">
+        <form id="login-form">
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                <input type="email" placeholder="you@example.com" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500" required>
+                <input type="email" id="email" placeholder="you@example.com" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500" required>
             </div>
             
             <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input type="password" placeholder="••••••••" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500" required>
+                <input type="password" id="password" placeholder="••••••••" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500" required>
             </div>
 
-            <button type="submit" class="w-full bg-gray-900 text-white font-medium py-2 rounded hover:bg-gray-800 transition">
+            <div id="error-message" class="text-red-500 text-sm mb-4 hidden"></div>
+
+            <button type="submit" id="submit-btn" class="w-full bg-gray-900 text-white font-medium py-2 rounded hover:bg-gray-800 transition">
                 Sign In
             </button>
         </form>
@@ -34,10 +37,38 @@
             <span class="text-gray-600">No account?</span> 
             <a href="register.html" class="text-blue-600 hover:underline">Register →</a>
         </div>
-        <div class="mt-2 text-center text-sm">
-            <a href="#" class="text-blue-600 hover:underline">Forgot password?</a>
-        </div>
     </div>
 
+    <script src="supabase-config.js"></script>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault(); 
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('error-message');
+            const submitBtn = document.getElementById('submit-btn');
+
+            errorDiv.classList.add('hidden');
+            submitBtn.textContent = "Signing In...";
+            submitBtn.disabled = true;
+
+            // Call Supabase to authenticate
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                errorDiv.textContent = error.message;
+                errorDiv.classList.remove('hidden');
+                submitBtn.textContent = "Sign In";
+                submitBtn.disabled = false;
+            } else {
+                // Success. Redirect to the main dashboard
+                window.location.href = "index.html";
+            }
+        });
+    </script>
 </body>
 </html>
