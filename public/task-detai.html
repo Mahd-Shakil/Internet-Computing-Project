@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Details - Task Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans p-8">
+
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div class="flex items-center justify-between mb-6 border-b pb-4">
+            <div class="flex items-center">
+                <a href="index.html" class="text-gray-500 hover:text-gray-800 mr-4">← Back</a>
+                <h1 class="text-2xl font-bold">Edit Task</h1>
+            </div>
+            <span class="border border-blue-300 px-2 py-1 text-xs rounded bg-blue-50 text-blue-700">In Progress</span>
+        </div>
+
+        <form action="index.html" method="GET">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Task Title</label>
+                <input type="text" value="Design landing page mockups" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <textarea rows="4" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500">Create wireframes and high-fidelity mockups for the new marketing landing page.</textarea>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 mb-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
+                    <input type="date" value="2026-06-10" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Priority</label>
+                    <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500">
+                        <option>Low</option>
+                        <option>Medium</option>
+                        <option selected>High</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500">
+                        <option>Pending</option>
+                        <option selected>In Progress</option>
+                        <option>Completed</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-4 border-t">
+                <button type="button" class="text-red-600 text-sm hover:underline hover:text-red-800 transition">Delete Task</button>
+                
+                <div class="flex space-x-3">
+                    <a href="index.html" class="px-4 py-2 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-50 transition">Cancel</a>
+                    <button type="submit" class="bg-gray-900 text-white px-4 py-2 rounded text-sm hover:bg-gray-800 transition">Update Task</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
