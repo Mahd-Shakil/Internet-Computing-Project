@@ -37,19 +37,27 @@ To get this project running on your local machine, ensure you have [Node.js](htt
     ```bash
     cd task-manager-app
     ```
-3. **Initialize Node:**
+3. To make deployment and grading easier, a throwaway database specifically for this
+   assignment has been setup. Please create a `.env` file in the root directory and
+   add the following:
+   ```
+    SUPABASE_URL=https://vqiuowihefogxlnjxjjr.supabase.co
+    SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZxaXVvd2loZWZvZ3hsbmp4ampyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUwOTgzMzAsImV4cCI6MjEwMDY3NDMzMH0.IuvKWFzKBD7aG9sX3cef48pe8gm8y43vOIFbAFxlzyI
+    PORT=3000
+   ```
+4. **Initialize Node:**
     ```bash
     npm init -y
     ```
-4. **Install the required dependencies:**
+5. **Install the required dependencies:**
     ```bash
     npm install
     ```
-5. **Start the backend server:**
+6. **Start the backend server:**
     ```bash
     node server.js
     ```
-6. **Access the application** by navigating to `http://localhost:3000`.
+7. **Access the application** by navigating to `http://localhost:3000`.
 
 ## Project Status
 
