@@ -76,5 +76,68 @@
             </div>
         </form>
     </div>
+
+    <!-- Configuration and Logic -->
+    <script src="supabase-config.js"></script>
+    <script>
+        // Check if user is logged in before letting them see the page
+        async function verifyAuth() {
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            if (!user) {
+                window.location.href = 'login.html';
+            }
+            return user;
+        }
+
+        let currentUser = null;
+        verifyAuth().then(user => { currentUser = user; });
+
+        document.getElementById('create-task-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const dueDate = document.getElementById('due-date').value;
+            const priority = document.getElementById('priority').value;
+            const status = document.getElementById('status').value;
+            
+            const errorDiv = document.getElementById('error-message');
+            const submitBtn = document.getElementById('submit-btn');
+
+            errorDiv.classList.add('hidden');
+            submitBtn.textContent = "Saving...";
+            submitBtn.disabled = true;
+
+            try {
+                // Insert the new task into the Supabase database
+                const { error } = await supabaseClient
+                    .from('tasks')
+                    .insert([
+                        {
+                            user_id: currentUser.id,
+                            title: title,
+                            description: description,
+                            // If dueDate is empty, pass null to the database
+                            due_date: dueDate ? dueDate : null, 
+                            priority: priority,
+                            status: status
+                        }
+                    ]);
+
+                if (error) throw error;
+
+                // Success. Redirect back to the dashboard
+                window.location.href = 'index.html';
+
+            } catch (err) {
+                console.error("Task Creation Error:", err);
+                errorDiv.textContent = err.message || "Failed to create task. Please try again.";
+                errorDiv.classList.remove('hidden');
+                
+                submitBtn.textContent = "Create Task";
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
 </body>
 </html>
