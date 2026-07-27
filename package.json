@@ -4,7 +4,8 @@
   "description": "The Task Management System is a web application that allows users to create, organize, and manage their tasks. The goal of the project is to help users keep track of their work and improve productivity.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,6 @@
     "@supabase/supabase-js": "^2.110.9",
     "dotenv": "^17.4.2",
     "express": "^5.2.1"
-  }
+  },
+  "devDependencies": {}
 }
