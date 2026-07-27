@@ -1,34 +1,36 @@
-// Mock data based on your wireframes
-const mockTasks = [
-    {
-        id: 1,
-        title: "Design landing page mockups",
-        status: "In Progress",
-        dueDate: "2026-06-10",
-        priority: "High"
-    },
-    {
-        id: 2,
-        title: "Write unit tests for API",
-        status: "Pending",
-        dueDate: "2026-06-15",
-        priority: "Medium"
-    },
-    {
-        id: 3,
-        title: "Review pull requests",
-        status: "Completed",
-        dueDate: "2026-06-05",
-        priority: "Low"
-    },
-    {
-        id: 4,
-        title: "Update documentation",
-        status: "Pending",
-        dueDate: "2026-06-20",
-        priority: "Medium"
+// Function to check if user is logged in
+async function checkAuth() {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    
+    // If no user is logged in, redirect to login page
+    if (!user) {
+        window.location.href = 'login.html';
+        return;
     }
-];
+    
+    // If logged in, fetch their tasks
+    fetchTasks();
+}
+
+// Function to fetch tasks from Supabase
+async function fetchTasks() {
+    const taskList = document.getElementById('task-list');
+    taskList.innerHTML = '<div class="p-4 text-sm text-gray-500 text-center">Loading tasks...</div>';
+
+    // Query the Tasks table (RLS automatically filters for the logged-in user)
+    const { data: tasks, error } = await supabaseClient
+        .from('tasks')
+        .select('*')
+        .order('due_date', { ascending: true }); // Sort by due date by default
+
+    if (error) {
+        console.error("Error fetching tasks:", error);
+        taskList.innerHTML = '<div class="p-4 text-sm text-red-500 text-center">Failed to load tasks.</div>';
+        return;
+    }
+
+    renderTasks(tasks);
+}
 
 // Function to map status to UI colors
 function getStatusBadge(status) {
@@ -42,7 +44,7 @@ function getStatusBadge(status) {
 // Function to render tasks to the DOM
 function renderTasks(tasks) {
     const taskList = document.getElementById('task-list');
-    taskList.innerHTML = ''; // Clear current
+    taskList.innerHTML = ''; // Clear loading state
 
     if (tasks.length === 0) {
         taskList.innerHTML = '<div class="p-4 text-sm text-gray-500 italic border-b text-center">No tasks yet. Create your first task!</div>';
@@ -53,20 +55,34 @@ function renderTasks(tasks) {
         const row = document.createElement('div');
         row.className = 'grid grid-cols-12 gap-4 p-3 border-b border-gray-200 text-sm items-center hover:bg-gray-50 transition';
         
+        const displayDate = task.due_date ? task.due_date : 'No date';
+
         row.innerHTML = `
             <div class="col-span-5 font-medium text-gray-800">${task.title}</div>
             <div class="col-span-2">${getStatusBadge(task.status)}</div>
-            <div class="col-span-3 text-gray-600">${task.dueDate}</div>
+            <div class="col-span-3 text-gray-600">${displayDate}</div>
             <div class="col-span-2 flex justify-between items-center">
                 <span class="border px-2 py-1 text-xs rounded text-gray-600">${task.priority}</span>
-                <a href="task-detail.html" class="text-blue-600 hover:underline text-xs">View</a>
+                <!-- Pass the task ID in the URL so the detail page knows which task to load -->
+                <a href="task-detail.html?id=${task.id}" class="text-blue-600 hover:underline text-xs">View</a>
             </div>
         `;
         taskList.appendChild(row);
     });
 }
 
-// Initialize the application
+// Handle Logout Button
 document.addEventListener('DOMContentLoaded', () => {
-    renderTasks(mockTasks);
+    // Check auth as soon as the page loads
+    checkAuth();
+
+    // Attach logout event to the logout button
+    const logoutBtn = document.querySelector('a[href="login.html"]');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await supabaseClient.auth.signOut();
+            window.location.href = 'login.html';
+        });
+    }
 });
