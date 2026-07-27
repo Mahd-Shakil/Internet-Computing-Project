@@ -17,22 +17,46 @@
             </div>
         </div>
 
-        <div class="flex items-center space-x-4 mb-6 text-sm border-b pb-4">
-            <div>
-                <label class="text-gray-500 mr-2">Filter by Status:</label>
-                <select class="border p-1 rounded">
-                    <option>All</option>
-                    <option>Pending</option>
-                    <option>In Progress</option>
-                    <option>Completed</option>
-                </select>
-            </div>
-            <div>
-                <label class="text-gray-500 mr-2">Sort:</label>
-                <select class="border p-1 rounded">
-                    <option>Due Date ↑</option>
-                    <option>Due Date ↓</option>
-                </select>
+        <div class="flex items-center justify-between mb-6 border-b border-gray-200 pb-4">
+            <div class="flex items-center space-x-6 text-sm">
+                
+                <!-- Filter Dropdown -->
+                <div class="flex items-center">
+                    <label class="text-gray-500 font-medium mr-3">Filter by Status:</label>
+                    <div class="relative">
+                        <select id="status-filter" class="appearance-none bg-white border border-gray-300 text-gray-700 py-1.5 pl-3 pr-8 rounded leading-tight focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 cursor-pointer shadow-sm transition-all duration-200 hover:bg-gray-50">
+                            <option value="All">All</option>
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                        <!-- Custom Chevron Icon -->
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sort Dropdown -->
+                <div class="flex items-center">
+                    <label class="text-gray-500 font-medium mr-3">Sort:</label>
+                    <div class="relative">
+                        <!-- We match the dark aesthetic from your wireframe for the active sort -->
+                        <select id="sort-filter" class="appearance-none bg-gray-900 border border-gray-900 text-white py-1.5 pl-3 pr-8 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-900 cursor-pointer shadow-sm transition-all duration-200 hover:bg-gray-800">
+                            <option value="asc">Due Date &uarr;</option>
+                            <option value="desc">Due Date &darr;</option>
+                        </select>
+                        <!-- Custom Chevron Icon (Light color for dark background) -->
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-300">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
 
