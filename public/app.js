@@ -12,16 +12,26 @@ async function checkAuth() {
     fetchTasks();
 }
 
-// Function to fetch tasks from Supabase
+// Function to fetch tasks from Supabase, applying status filter and due-date sort
 async function fetchTasks() {
     const taskList = document.getElementById('task-list');
     taskList.innerHTML = '<div class="p-4 text-sm text-gray-500 text-center">Loading tasks...</div>';
 
+    const statusFilter = document.getElementById('status-filter')?.value || 'All';
+    const sortOrder = document.getElementById('sort-filter')?.value || 'asc';
+
     // Query the Tasks table (RLS automatically filters for the logged-in user)
-    const { data: tasks, error } = await supabaseClient
+    let query = supabaseClient
         .from('tasks')
-        .select('*')
-        .order('due_date', { ascending: true }); // Sort by due date by default
+        .select('*');
+
+    if (statusFilter !== 'All') {
+        query = query.eq('status', statusFilter);
+    }
+
+    query = query.order('due_date', { ascending: sortOrder === 'asc' });
+
+    const { data: tasks, error } = await query;
 
     if (error) {
         console.error("Error fetching tasks:", error);
@@ -75,6 +85,16 @@ function renderTasks(tasks) {
 document.addEventListener('DOMContentLoaded', () => {
     // Check auth as soon as the page loads
     checkAuth();
+
+    // Re-fetch when status filter or due-date sort changes
+    const statusFilter = document.getElementById('status-filter');
+    const sortFilter = document.getElementById('sort-filter');
+    if (statusFilter) {
+        statusFilter.addEventListener('change', fetchTasks);
+    }
+    if (sortFilter) {
+        sortFilter.addEventListener('change', fetchTasks);
+    }
 
     // Attach logout event to the logout button
     const logoutBtn = document.querySelector('a[href="login.html"]');
