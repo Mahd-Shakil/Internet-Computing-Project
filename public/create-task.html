@@ -5,47 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Task - Task Manager</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Supabase via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans p-8">
 
     <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <!-- Header -->
         <div class="flex items-center mb-6 border-b pb-4">
             <a href="index.html" class="text-gray-500 hover:text-gray-800 mr-4">← Back</a>
             <h1 class="text-2xl font-bold">Create New Task</h1>
         </div>
 
-        <form action="index.html" method="GET">
+        <!-- Form -->
+        <form id="create-task-form">
             <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Task Title</label>
-                <input type="text" placeholder="e.g., Update documentation" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500" required>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Title *</label>
+                <input type="text" id="title" placeholder="Task title (required)" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500" required>
             </div>
 
             <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Description (Optional)</label>
-                <textarea rows="4" placeholder="Add more details about this task..." class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500"></textarea>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <textarea id="description" rows="4" placeholder="Optional description..." class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500"></textarea>
             </div>
 
-            <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="grid grid-cols-2 gap-4 mb-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
-                    <input type="date" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500" required>
+                    <input type="date" id="due-date" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all cursor-pointer">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Priority</label>
-                    <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500">
-                        <option>Low</option>
-                        <option>Medium</option>
-                        <option>High</option>
-                    </select>
+                    <div class="relative">
+                        <select id="priority" class="appearance-none w-full border border-gray-300 rounded px-3 py-2 pr-8 text-sm focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 cursor-pointer bg-white transition-all hover:bg-gray-50">
+                            <option value="Low">Low</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                            </svg>
+                        </div>
+                    </div>
                 </div>
             </div>
 
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <div class="relative">
+                    <select id="status" class="appearance-none w-full border border-gray-300 rounded px-3 py-2 pr-8 text-sm focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 cursor-pointer bg-white transition-all hover:bg-gray-50">
+                        <option value="Pending" selected>Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div id="error-message" class="text-red-500 text-sm mb-4 hidden"></div>
+
+            <!-- Buttons -->
             <div class="flex justify-end space-x-3 pt-4 border-t">
                 <a href="index.html" class="px-4 py-2 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-50 transition">Cancel</a>
-                <button type="submit" class="bg-gray-900 text-white px-4 py-2 rounded text-sm hover:bg-gray-800 transition">Save Task</button>
+                <button type="submit" id="submit-btn" class="bg-gray-900 text-white px-4 py-2 rounded text-sm hover:bg-gray-800 transition">Create Task</button>
             </div>
         </form>
     </div>
-
 </body>
 </html>
